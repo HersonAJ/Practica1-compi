@@ -1,31 +1,30 @@
 package com.example.practica1_compi
 
 import Lexer
+import com.example.practica1_compi.R
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import androidx.activity.ComponentActivity
 import com.example.practica1_compi.models.Token
+import android.widget.TextView
 import java.io.StringReader
 
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        val entrada = """
-            #este es un comentario
-            INICIO
-            VAR x = 10
-            VAR y = 20.5
-            SI (x < y) ENTONCES
-                MOSTRAR "Hola Kotlin"
-            FINSI
-            FIN
-            %%%%
-            %DEFAULT=1
-            %COLOR_TEXTO_SI=HFF5733|1
-        """.trimIndent()
+        val inputText = findViewById<EditText>(R.id.inputText)
+        val btnAnalizar = findViewById<Button>(R.id.btnAnalizar)
 
-        probarLexer(entrada)
+        btnAnalizar.setOnClickListener {
+            val entrada = inputText.text.toString()
+            probarLexer(entrada)
+        }
     }
 
     private fun probarLexer(entrada: String) {
@@ -38,10 +37,14 @@ class MainActivity : ComponentActivity() {
 
             while (token != null) {
                 contador++
-                // Cambia println por Log.d
-                Log.d("MI_LEXER", "Token $contador: tipo=${token.tipo}, " +
-                        "lexema='${token.lexema}', linea=${token.linea}, " +
-                        "columna=${token.columna}")
+
+                Log.d(
+                    "MI_LEXER",
+                    "Token $contador: tipo=${token.tipo}, " +
+                            "lexema='${token.lexema}', linea=${token.linea}, " +
+                            "columna=${token.columna}"
+                )
+
                 token = lexer.yylex()
             }
 
