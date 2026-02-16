@@ -1,12 +1,15 @@
+import com.example.practica1_compi.models.Token;
+
 %% //separador de area
 
 /********* declaraciones de jflex ********************/
 %public
 %unicode
 %class Lexer
-%standalone
+//%standalone
 %line
 %column
+%type com.example.practica1_compi.models.Token
 
 %init{
 /******* elementos dentro del constructor ************/
@@ -34,89 +37,91 @@ ESPACIO = [ \t\r\n\f]+
 /******************* reglas lexicas *********************/
 
 //comentario
-"#".*                                       { System.out.println("comentario encontrado");}
+"#".*                                       { /* provisionalmente se ignora */}
 
 //separador de secciones
-"%%%%"                                      { System.out.println("Separador encontrado");}
+"%%%%"                                      { return new Token("separador de seccion", yytext(), yyline+1, yycolumn+1);}
 
 //elementos de configuracion de diagramas
 
 //instrucciones de configuracion
-"%DEFAULT"                     { System.out.println("config: DEFAULT"); }
-"%COLOR_TEXTO_SI"              { System.out.println("config: COLOR_TEXTO_SI"); }
-"%COLOR_SI"                    { System.out.println("config: COLOR_SI"); }
-"%FIGURA_SI"                   { System.out.println("config: FIGURA_SI"); }
-"%LETRA_SI"                    { System.out.println("config: LETRA_SI"); }
-"%LETRA_SIZE_SI"               { System.out.println("config: LETRA_SIZE_SI"); }
-"%COLOR_TEXTO_MIENTRAS"        { System.out.println("config: COLOR_TEXTO_MIENTRAS"); }
-"%COLOR_MIENTRAS"              { System.out.println("config: COLOR_MIENTRAS"); }
-"%FIGURA_MIENTRAS"             { System.out.println("config: FIGURA_MIENTRAS"); }
-"%LETRA_MIENTRAS"              { System.out.println("config: LETRA_MIENTRAS"); }
-"%LETRA_SIZE_MIENTRAS"         { System.out.println("config: LETRA_SIZE_MIENTRAS"); }
-"%COLOR_TEXTO_BLOQUE"          { System.out.println("config: COLOR_TEXTO_BLOQUE"); }
-"%COLOR_BLOQUE"                { System.out.println("config: COLOR_BLOQUE"); }
-"%FIGURA_BLOQUE"               { System.out.println("config: FIGURA_BLOQUE"); }
-"%LETRA_BLOQUE"                { System.out.println("config: LETRA_BLOQUE"); }
-"%LETRA_SIZE_BLOQUE"           { System.out.println("config: LETRA_SIZE_BLOQUE"); }
+"%DEFAULT"                     { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%COLOR_TEXTO_SI"              { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%COLOR_SI"                    { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%FIGURA_SI"                   { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%LETRA_SI"                    { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%LETRA_SIZE_SI"               { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%COLOR_TEXTO_MIENTRAS"        { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%COLOR_MIENTRAS"              { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%FIGURA_MIENTRAS"             { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%LETRA_MIENTRAS"              { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%LETRA_SIZE_MIENTRAS"         { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%COLOR_TEXTO_BLOQUE"          { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%COLOR_BLOQUE"                { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%FIGURA_BLOQUE"               { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%LETRA_BLOQUE"                { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%LETRA_SIZE_BLOQUE"           { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
 
 
 //figuras
 "ELIPSE" | "CIRCULO" | "PARALELOGRAMO" | "RECTANGULO" |
-"ROMBO" | "RECTANGULO_REDONDEADO"           { System.out.println("config: figura");}
+"ROMBO" | "RECTANGULO_REDONDEADO"           { return new Token("FIGURAS", yytext(), yyline+1, yycolumn+1);}
 
 //tipos de letra
-"ARIAL" | "TIMES_NEW_ROMAN" | "COMIC_SANS" | "VERDANA"      { System.out.println("config: letra");}
+"ARIAL" | "TIMES_NEW_ROMAN" | "COMIC_SANS" | "VERDANA"      { return new Token("LETRAS", yytext(), yyline+1, yycolumn+1);}
 
 //color hexadecimal
-{HEXCOLOR}                                  { System.out.println("config: color hex");}
+{HEXCOLOR}                                  { return new Token("color hexadecimal", yytext(), yyline+1, yycolumn+1);}
 
 //elementos de pseudocodigo
 
 //palabras reservadas
-"INICIO"                                { System.out.println("palabra reservada");}
-"FIN"                                   { System.out.println("palabra reservada");}
-"VAR"                                   { System.out.println("palabra reservada");}
-"SI"                                    { System.out.println("palabra reservada");}
-"ENTONCES"                              { System.out.println("palabra reservada");}
-"FINSI"                                 { System.out.println("palabra reservada");}
-"MIENTRAS"                              { System.out.println("palabra reservada");}
-"HACER"                                 { System.out.println("palabra reservada");}
-"FINMIENTRAS"                           { System.out.println("palabra reservada");}
-"MOSTRAR"                               { System.out.println("palabra reservada");}
-"LEER"                                  { System.out.println("palabra reservada");}
+"INICIO"                                { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"FIN"                                   { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"VAR"                                   { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"SI"                                    { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"ENTONCES"                              { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"FINSI"                                 { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"MIENTRAS"                              { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"HACER"                                 { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"FINMIENTRAS"                           { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"MOSTRAR"                               { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"LEER"                                  { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
 
 //operadores relaciones
-"==" | "!=" | "<=" | ">="               { System.out.println("operador relacional encontrado");}
-"<" | ">"                               { System.out.println("operador relacional encontrado");}
+"==" | "!=" | "<=" | ">="               { return new Token("OPERADOR RELACIONAL", yytext(), yyline+1, yycolumn+1);}
+"<" | ">"                               { return new Token("OPERADOR RELACIONAL", yytext(), yyline+1, yycolumn+1);}
 
 //operador logico
-"&&" | "||" | "!"                       { System.out.println("operador logico encontrado");}
+"&&" | "||"                             { return new Token("OPERADOR LOGICO", yytext(), yyline+1, yycolumn+1);}
+"!"                                     { return new Token("NOT_LOGICO", yytext(), yyline+1, yycolumn+1);}
 
 //operadores aritmeticos
-"+" | "-" | "*" | "/"                   { System.out.println("operador aritmetico encontrado");}
+"+" | "-" | "*" | "/"                   { return new Token("OPERADOR ARITMETICO", yytext(), yyline+1, yycolumn+1);}
 
 //asignacion
-"="                                     { System.out.println("operador asignacion encontrado");}
+"="                                     { return new Token("OPERADOR ASIGNACION", yytext(), yyline+1, yycolumn+1);}
 
 //simbolo
-","                                     { System.out.println("coma encontrada");}
-"|"                                     { System.out.println("pipe encontrado");}
-"(" | ")"                               { System.out.println("parentesis encontrado");}
+","                                     { return new Token("COMA", yytext(), yyline+1, yycolumn+1);}
+"|"                                     { return new Token("PIPE", yytext(), yyline+1, yycolumn+1);}
+"("                                     { return new Token("LPAREN", yytext(), yyline+1, yycolumn+1);}
+")"                                     { return new Token("RPAREN", yytext(), yyline+1, yycolumn+1);}
 
 //literales numericas
-{DECIMAL}                               { System.out.println("Decimal encontrado");}
-{ENTERO}                                { System.out.println("entero encontrado");}
+{DECIMAL}                               { return new Token("NUMERO", yytext(), yyline+1, yycolumn+1);}
+{ENTERO}                                { return new Token("NUMERO", yytext(), yyline+1, yycolumn+1);}
 
 //cadena
-{CADENA}                                { System.out.println("cadena encontrada");}
+{CADENA}                                { return new Token("CADENA", yytext(), yyline+1, yycolumn+1);}
 
 //identificadores
-{ID}                                    { System.out.println("Identificador encontrado");}
+{ID}                                    { return new Token("IDENTIFICADOR", yytext(), yyline+1, yycolumn+1);}
 
 //espacio
-{ESPACIO}                               { /*ignorar*/ }
+{ESPACIO}                               { /*no hace nada*/ }
 
 //error lexico
-.                                       { System.out.println("Error lexico: caracter ' " + yytext() + " ' en la linea " + (yyline+1) + ", columna " + (yycolumn+1));}
+.                                       { return new Token("ERROR", yytext(), yyline+1, yycolumn+1);}
 
-<<EOF>>                                 { /*fin del archivo*/}
+<<EOF>>                                 { return null; }

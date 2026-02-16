@@ -1,47 +1,54 @@
 package com.example.practica1_compi
 
+import Lexer
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.practica1_compi.ui.theme.Practica1_compiTheme
+import com.example.practica1_compi.models.Token
+import java.io.StringReader
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            Practica1_compiTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
+
+        val entrada = """
+            #este es un comentario
+            INICIO
+            VAR x = 10
+            VAR y = 20.5
+            SI (x < y) ENTONCES
+                MOSTRAR "Hola Kotlin"
+            FINSI
+            FIN
+            %%%%
+            %DEFAULT=1
+            %COLOR_TEXTO_SI=HFF5733|1
+        """.trimIndent()
+
+        probarLexer(entrada)
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    private fun probarLexer(entrada: String) {
+        try {
+            val reader = StringReader(entrada)
+            val lexer = Lexer(reader)
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Practica1_compiTheme {
-        Greeting("Android")
+            var token: Token? = lexer.yylex()
+            var contador = 0
+
+            while (token != null) {
+                contador++
+                // Cambia println por Log.d
+                Log.d("MI_LEXER", "Token $contador: tipo=${token.tipo}, " +
+                        "lexema='${token.lexema}', linea=${token.linea}, " +
+                        "columna=${token.columna}")
+                token = lexer.yylex()
+            }
+
+            Log.d("MI_LEXER", "Total de tokens: $contador")
+
+        } catch (e: Exception) {
+            Log.e("MI_LEXER", "Error: ${e.message}", e)
+        }
     }
 }
