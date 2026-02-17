@@ -20,14 +20,19 @@ class MainActivity : ComponentActivity() {
 
         val inputText = findViewById<EditText>(R.id.inputText)
         val btnAnalizar = findViewById<Button>(R.id.btnAnalizar)
+        val outputText = findViewById<TextView>(R.id.outputText)
 
         btnAnalizar.setOnClickListener {
             val entrada = inputText.text.toString()
-            probarLexer(entrada)
+            val resultados = probarLexer(entrada)
+            outputText.text = resultados
         }
     }
 
-    private fun probarLexer(entrada: String) {
+    private fun probarLexer(entrada: String): String {
+
+        val resultados = StringBuilder()
+
         try {
             val reader = StringReader(entrada)
             val lexer = Lexer(reader)
@@ -35,23 +40,26 @@ class MainActivity : ComponentActivity() {
             var token: Token? = lexer.yylex()
             var contador = 0
 
+            resultados.append("analisis lexico\n")
+            resultados.append("------------------------------\n")
+
             while (token != null) {
                 contador++
 
-                Log.d(
-                    "MI_LEXER",
-                    "Token $contador: tipo=${token.tipo}, " +
-                            "lexema='${token.lexema}', linea=${token.linea}, " +
-                            "columna=${token.columna}"
-                )
+                resultados.append("Token $contador: \n")
+                resultados.append(" Tipo: ${token.tipo}\n")
+                resultados.append(" Lexema:${token.lexema}\n")
+                resultados.append(" linea: ${token.linea}\n")
+                resultados.append(" columna: ${token.columna}\n\n")
 
                 token = lexer.yylex()
             }
-
-            Log.d("MI_LEXER", "Total de tokens: $contador")
+            resultados.append("------------------------------\n")
+            resultados.append("Total de tokens: $contador")
 
         } catch (e: Exception) {
-            Log.e("MI_LEXER", "Error: ${e.message}", e)
+            resultados.append("Error:  ${e.message}")
         }
+        return resultados.toString()
     }
 }
