@@ -32,6 +32,12 @@ CADENA= \"[^\"]*\"
 HEXCOLOR= "H"[0-9a-fA-F]{6}
 ESPACIO = [ \t\r\n\f]+
 
+//errores en los identificadores
+ID_INVALIDO_NUM = ({DIGITO}+("."{DIGITO}+)?)({LETRA}|_])+({LETRA}|{DIGITO}|_)*
+ID_INVALIDO_GUION = _({LETRA}|{DIGITO}|_)+
+//errores en decimales
+DECIMAL_INCOMPLETO = {DIGITO}+"."
+
 %% //separador de area
 
 /******************* reglas lexicas *********************/
@@ -45,22 +51,22 @@ ESPACIO = [ \t\r\n\f]+
 //elementos de configuracion de diagramas
 
 //instrucciones de configuracion
-"%DEFAULT"                     { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%COLOR_TEXTO_SI"              { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%COLOR_SI"                    { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%FIGURA_SI"                   { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%LETRA_SI"                    { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%LETRA_SIZE_SI"               { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%COLOR_TEXTO_MIENTRAS"        { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%COLOR_MIENTRAS"              { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%FIGURA_MIENTRAS"             { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%LETRA_MIENTRAS"              { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%LETRA_SIZE_MIENTRAS"         { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%COLOR_TEXTO_BLOQUE"          { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%COLOR_BLOQUE"                { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%FIGURA_BLOQUE"               { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%LETRA_BLOQUE"                { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
-"%LETRA_SIZE_BLOQUE"           { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1);}
+"%DEFAULT" |
+"%COLOR_TEXTO_SI" |
+"%COLOR_SI" |
+"%FIGURA_SI" |
+"%LETRA_SI" |
+"%LETRA_SIZE_SI" |
+"%COLOR_TEXTO_MIENTRAS" |
+"%COLOR_MIENTRAS" |
+"%FIGURA_MIENTRAS" |
+"%LETRA_MIENTRAS" |
+"%LETRA_SIZE_MIENTRAS" |
+"%COLOR_TEXTO_BLOQUE" |
+"%COLOR_BLOQUE" |
+"%FIGURA_BLOQUE" |
+"%LETRA_BLOQUE" |
+"%LETRA_SIZE_BLOQUE"            { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1); }
 
 
 //figuras
@@ -73,19 +79,23 @@ ESPACIO = [ \t\r\n\f]+
 //color hexadecimal
 {HEXCOLOR}                                  { return new Token("color hexadecimal", yytext(), yyline+1, yycolumn+1);}
 
+//errores de los identificadores
+{ID_INVALIDO_NUM}                           { return new Token("ERROR_IDENTIFICADOR_INVALIDO", yytext(), yyline+1, yycolumn+1);}
+{ID_INVALIDO_GUION}                         { return new Token("ERROR_IDENTIFICADOR_INVALIDO", yytext(), yyline+1, yycolumn+1);}
+
 //elementos de pseudocodigo
 
 //palabras reservadas
-"INICIO"                                { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"FIN"                                   { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"VAR"                                   { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"SI"                                    { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"ENTONCES"                              { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"FINSI"                                 { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"MIENTRAS"                              { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"HACER"                                 { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"FINMIENTRAS"                           { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
-"MOSTRAR"                               { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"INICIO" |
+"FIN" |
+"VAR" |
+"SI" |
+"ENTONCES" |
+"FINSI" |
+"MIENTRAS" |
+"HACER" |
+"FINMIENTRAS" |
+"MOSTRAR" |
 "LEER"                                  { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
 
 //operadores relaciones
@@ -109,8 +119,9 @@ ESPACIO = [ \t\r\n\f]+
 ")"                                     { return new Token("RPAREN", yytext(), yyline+1, yycolumn+1);}
 
 //literales numericas
-{DECIMAL}                               { return new Token("NUMERO", yytext(), yyline+1, yycolumn+1);}
-{ENTERO}                                { return new Token("NUMERO", yytext(), yyline+1, yycolumn+1);}
+{DECIMAL_INCOMPLETO}                    { return new Token("ERROR_DECIMAL_INVALIDO", yytext(), yyline+1, yycolumn+1); }
+{DECIMAL}                               { return new Token("DEDIMAL", yytext(), yyline+1, yycolumn+1);}
+{ENTERO}                                { return new Token("ENTERO", yytext(), yyline+1, yycolumn+1);}
 
 //cadena
 {CADENA}                                { return new Token("CADENA", yytext(), yyline+1, yycolumn+1);}
