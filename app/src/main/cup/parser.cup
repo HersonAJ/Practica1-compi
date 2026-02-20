@@ -1,0 +1,59 @@
+import java_cup.runtime.*;
+
+parser code {:
+    public void report_error(String message, Object info) {
+        System.err.println("Error sintactico: " + message);
+    }
+:}
+
+//Terminales
+terminal SEPARADOR_SECCION;
+terminal CONFIG, FIGURA, LETRA, COLOR_HEX;
+terminal PALABRA_RESERVADA;
+terminal OPERADOR_RELACIONAL, OPERADOR_LOGICO, NOT_LOGICO;
+terminal OPERADOR_ARITMETICO, OPERADOR_ASIGNACION;
+terminal COMA, PIPE, LPAREN, RPAREN;
+terminal NUMERO, CADENA, IDENTIFICADOR;
+terminal ERROR, ERROR_IDENTIFICADOR_INVALIDO, ERROR_DECIMAL_INVALIDO;
+
+//no terminales
+non terminal programa;
+non terminal configuracion, lista_config, valor_config;
+non terminal pseudocodigo, sentencia;
+non terminal expresion;
+
+//reglas de precedencia para las operaciones
+precedence left OPERADOR_LOGICO;
+precedence left OPERADOR_RELACIONAL;
+precedence left OPERADOR_ARITMETICO;
+precedence right NOT_LOGICO;
+
+start with programa;
+
+programa ::= pseudocodigo SEPARADOR_SECCION configuracion ;
+
+configuracion ::= lista_config ;
+
+lista_config ::= lista_config CONFIG valor_config
+                | ;
+
+valor_config ::= COLOR_HEX
+                | FIGURA
+                | LETRA
+                | NUMERO ;
+
+pseudocodigo ::= pseudocodigo sentencia
+                | sentencia ;
+
+sentencia ::= IDENTIFICADOR OPERADOR_ASIGNACION expresion
+                | PALABRA_RESERVADA IDENTIFICADOR OPERADOR_ASIGNACION expresion
+                | PALABRA_RESERVADA expresion ;
+
+expresion ::= expresion OPERADOR_ARITMETICO expresion
+                | expresion OPERADOR_RELACIONAL expresion
+                | expresion OPERADOR_LOGICO expresion
+                | NOT_LOGICO expresion
+                 LPAREN expresion RPAREN
+                | NUMERO
+                | CADENA
+                | IDENTIFICADOR ;

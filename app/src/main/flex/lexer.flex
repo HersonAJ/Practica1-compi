@@ -1,23 +1,22 @@
-import com.example.practica1_compi.models.Token;
+package com.example.practica1_compi.analizadores.lexer;
+
+import java_cup.runtime.Symbol;
+import com.example.practica1_compi.analizadores.parser.*;import com.example.practica1_compi.analizadores.sym;
 
 %% //separador de area
 
-/********* declaraciones de jflex ********************/
 %public
 %unicode
 %class Lexer
-//%standalone
+%cup
 %line
 %column
-%type com.example.practica1_compi.models.Token
-
-%init{
-/******* elementos dentro del constructor ************/
-
-%init}
 
 %{
-/**************** codigo de usuario *******************/
+
+    private Symbol symbol(int type) {
+        return new Symbol(type, yyline + 1, yycolumn + 1, yytext());
+    }
 
 %}
 
@@ -28,25 +27,20 @@ LETRA = [a-zA-Z]
 ID = {LETRA}({LETRA}|{DIGITO}|_)*
 ENTERO = {DIGITO}+
 DECIMAL = {DIGITO}+"."{DIGITO}+
+DECIMAL_INCOMPLETO = {DIGITO}+ "."
 CADENA= \"[^\"]*\"
 HEXCOLOR= "H"[0-9a-fA-F]{6}
 ESPACIO = [ \t\r\n\f]+
 
-//errores en los identificadores
-ID_INVALIDO_NUM = ({DIGITO}+("."{DIGITO}+)?)({LETRA}|_])+({LETRA}|{DIGITO}|_)*
+ID_INVALIDO_NUM = ({DIGITO}+("."{DIGITO}+)?)({LETRA}|_)+({LETRA}|{DIGITO}|_)*
 ID_INVALIDO_GUION = _({LETRA}|{DIGITO}|_)+
-//errores en decimales
-DECIMAL_INCOMPLETO = {DIGITO}+"."
 
-%% //separador de area
-
-/******************* reglas lexicas *********************/
+%%
 
 //comentario
 "#".*                                       { /* provisionalmente se ignora */}
 
-//separador de secciones
-"%%%%"                                      { return new Token("separador de seccion", yytext(), yyline+1, yycolumn+1);}
+"%%%%"                                      { return symbol(sym.SEPARADOR_SECCION); }
 
 //elementos de configuracion de diagramas
 
@@ -66,73 +60,50 @@ DECIMAL_INCOMPLETO = {DIGITO}+"."
 "%COLOR_BLOQUE" |
 "%FIGURA_BLOQUE" |
 "%LETRA_BLOQUE" |
-"%LETRA_SIZE_BLOQUE"            { return new Token("CONFIG", yytext(), yyline+1, yycolumn+1); }
+"%LETRA_SIZE_BLOQUE"            { return symbol(sym.CONFIG); }
 
+"ELIPSE" | "CIRCULO" | "PARALELOGRAMO" |
+"RECTANGULO" | "ROMBO" |
+"RECTANGULO_REDONDEADO"           { return symbol(sym.FIGURA); }
 
-//figuras
-"ELIPSE" | "CIRCULO" | "PARALELOGRAMO" | "RECTANGULO" |
-"ROMBO" | "RECTANGULO_REDONDEADO"           { return new Token("FIGURAS", yytext(), yyline+1, yycolumn+1);}
+"ARIAL" | "TIMES_NEW_ROMAN" |
+"COMIC_SANS" | "VERDANA"          { return symbol(sym.LETRA); }
 
-//tipos de letra
-"ARIAL" | "TIMES_NEW_ROMAN" | "COMIC_SANS" | "VERDANA"      { return new Token("LETRAS", yytext(), yyline+1, yycolumn+1);}
+{HEXCOLOR}                        { return symbol(sym.COLOR_HEX); }
 
-//color hexadecimal
-{HEXCOLOR}                                  { return new Token("color hexadecimal", yytext(), yyline+1, yycolumn+1);}
+{ID_INVALIDO_NUM}                 { return symbol(sym.ERROR_IDENTIFICADOR_INVALIDO); }
+{ID_INVALIDO_GUION}               { return symbol(sym.ERROR_IDENTIFICADOR_INVALIDO); }
 
-//errores de los identificadores
-{ID_INVALIDO_NUM}                           { return new Token("ERROR_IDENTIFICADOR_INVALIDO", yytext(), yyline+1, yycolumn+1);}
-{ID_INVALIDO_GUION}                         { return new Token("ERROR_IDENTIFICADOR_INVALIDO", yytext(), yyline+1, yycolumn+1);}
+"INICIO" | "FIN" | "VAR" |
+"SI" | "ENTONCES" | "FINSI" |
+"MIENTRAS" | "HACER" | "FINMIENTRAS" |
+"MOSTRAR" | "LEER"                { return symbol(sym.PALABRA_RESERVADA); }
 
-//elementos de pseudocodigo
+"==" | "!=" | "<=" | ">=" |
+"<" | ">"                         { return symbol(sym.OPERADOR_RELACIONAL); }
 
-//palabras reservadas
-"INICIO" |
-"FIN" |
-"VAR" |
-"SI" |
-"ENTONCES" |
-"FINSI" |
-"MIENTRAS" |
-"HACER" |
-"FINMIENTRAS" |
-"MOSTRAR" |
-"LEER"                                  { return new Token("PALABRA RESERVADA", yytext(), yyline+1, yycolumn+1);}
+"&&" | "||"                       { return symbol(sym.OPERADOR_LOGICO); }
+"!"                                { return symbol(sym.NOT_LOGICO); }
 
-//operadores relaciones
-"==" | "!=" | "<=" | ">="               { return new Token("OPERADOR RELACIONAL", yytext(), yyline+1, yycolumn+1);}
-"<" | ">"                               { return new Token("OPERADOR RELACIONAL", yytext(), yyline+1, yycolumn+1);}
+"+" | "-" | "*" | "/"             { return symbol(sym.OPERADOR_ARITMETICO); }
 
-//operador logico
-"&&" | "||"                             { return new Token("OPERADOR LOGICO", yytext(), yyline+1, yycolumn+1);}
-"!"                                     { return new Token("NOT_LOGICO", yytext(), yyline+1, yycolumn+1);}
+"="                                { return symbol(sym.OPERADOR_ASIGNACION); }
 
-//operadores aritmeticos
-"+" | "-" | "*" | "/"                   { return new Token("OPERADOR ARITMETICO", yytext(), yyline+1, yycolumn+1);}
+","                                { return symbol(sym.COMA); }
+"|"                                { return symbol(sym.PIPE); }
+"("                                { return symbol(sym.LPAREN); }
+")"                                { return symbol(sym.RPAREN); }
 
-//asignacion
-"="                                     { return new Token("OPERADOR ASIGNACION", yytext(), yyline+1, yycolumn+1);}
+{DECIMAL_INCOMPLETO}               { return symbol(sym.ERROR_DECIMAL_INVALIDO); }
+{DECIMAL}                          { return symbol(sym.NUMERO); }
+{ENTERO}                           { return symbol(sym.NUMERO); }
 
-//simbolo
-","                                     { return new Token("COMA", yytext(), yyline+1, yycolumn+1);}
-"|"                                     { return new Token("PIPE", yytext(), yyline+1, yycolumn+1);}
-"("                                     { return new Token("LPAREN", yytext(), yyline+1, yycolumn+1);}
-")"                                     { return new Token("RPAREN", yytext(), yyline+1, yycolumn+1);}
+{CADENA}                           { return symbol(sym.CADENA); }
 
-//literales numericas
-{DECIMAL_INCOMPLETO}                    { return new Token("ERROR_DECIMAL_INVALIDO", yytext(), yyline+1, yycolumn+1); }
-{DECIMAL}                               { return new Token("DEDIMAL", yytext(), yyline+1, yycolumn+1);}
-{ENTERO}                                { return new Token("ENTERO", yytext(), yyline+1, yycolumn+1);}
+{ID}                               { return symbol(sym.IDENTIFICADOR); }
 
-//cadena
-{CADENA}                                { return new Token("CADENA", yytext(), yyline+1, yycolumn+1);}
+{ESPACIO}                          { /* ignorar */ }
 
-//identificadores
-{ID}                                    { return new Token("IDENTIFICADOR", yytext(), yyline+1, yycolumn+1);}
+.                                   { return symbol(sym.ERROR); }
 
-//espacio
-{ESPACIO}                               { /*no hace nada*/ }
-
-//error lexico
-.                                       { return new Token("ERROR", yytext(), yyline+1, yycolumn+1);}
-
-<<EOF>>                                 { return null; }
+<<EOF>>                             { return new Symbol(sym.EOF); }

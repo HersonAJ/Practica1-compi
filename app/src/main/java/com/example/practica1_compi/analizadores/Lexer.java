@@ -4,8 +4,10 @@
 
 package com.example.practica1_compi.analizadores.lexer;
 
+import com.example.practica1_compi.analizadores.sym;
+
 import java_cup.runtime.Symbol;
-import com.example.practica1_compi.analizadores.parser.*;import com.example.practica1_compi.analizadores.sym;
+
 
 
 @SuppressWarnings("fallthrough")
