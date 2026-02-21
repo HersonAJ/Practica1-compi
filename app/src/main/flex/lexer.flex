@@ -1,7 +1,7 @@
-package com.example.practica1_compi.analizadores.lexer;
+package com.example.practica1_compi.analizadores;
 
 import java_cup.runtime.Symbol;
-import com.example.practica1_compi.analizadores.parser.*;import com.example.practica1_compi.analizadores.sym;
+import com.example.practica1_compi.analizadores.*;
 
 %% //separador de area
 
@@ -74,18 +74,34 @@ ID_INVALIDO_GUION = _({LETRA}|{DIGITO}|_)+
 {ID_INVALIDO_NUM}                 { return symbol(sym.ERROR_IDENTIFICADOR_INVALIDO); }
 {ID_INVALIDO_GUION}               { return symbol(sym.ERROR_IDENTIFICADOR_INVALIDO); }
 
-"INICIO" | "FIN" | "VAR" |
-"SI" | "ENTONCES" | "FINSI" |
-"MIENTRAS" | "HACER" | "FINMIENTRAS" |
-"MOSTRAR" | "LEER"                { return symbol(sym.PALABRA_RESERVADA); }
+//pseudocodigo
+"INICIO"                            { return symbol(sym.INICIO); }
+"FIN"                               { return symbol(sym.FIN); }
+"VAR"                               { return symbol(sym.VAR); }
+"SI"                                { return symbol(sym.SI); }
+"ENTONCES"                          { return symbol(sym.ENTONCES); }
+"FINSI"                             { return symbol(sym.FINSI); }
+"MIENTRAS"                          { return symbol(sym.MIENTRAS); }
+"HACER"                             { return symbol(sym.HACER); }
+"FINMIENTRAS"                       { return symbol(sym.FINMIENTRAS); }
+"MOSTRAR"                           { return symbol(sym.MOSTRAR); }
+"LEER"                              { return symbol(sym.LEER); }
 
-"==" | "!=" | "<=" | ">=" |
-"<" | ">"                         { return symbol(sym.OPERADOR_RELACIONAL); }
+"=="                                { return symbol(sym.IGUALDAD); }
+"!="                                { return symbol(sym.DISTINTO); }
+"<="                                { return symbol(sym.MENOR_IGUAL); }
+">="                                { return symbol(sym.MAYOR_IGUAL); }
+"<"                                 { return symbol(sym.MENOR); }
+">"                                 { return symbol(sym.MAYOR); }
 
-"&&" | "||"                       { return symbol(sym.OPERADOR_LOGICO); }
+"&&"                               { return symbol(sym.AND); }
+"||"                               { return symbol(sym.OR); }
 "!"                                { return symbol(sym.NOT_LOGICO); }
 
-"+" | "-" | "*" | "/"             { return symbol(sym.OPERADOR_ARITMETICO); }
+"+"                                 { return symbol(sym.SUMA); }
+"-"                                 { return symbol(sym.RESTA); }
+"*"                                 { return symbol(sym.MULT); }
+"/"                                 { return symbol(sym.DIV); }
 
 "="                                { return symbol(sym.OPERADOR_ASIGNACION); }
 

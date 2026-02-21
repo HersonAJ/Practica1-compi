@@ -6,29 +6,49 @@ package com.example.practica1_compi.analizadores;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int PIPE = 14;
-  public static final int FIGURA = 4;
-  public static final int CADENA = 18;
-  public static final int RPAREN = 16;
-  public static final int LETRA = 5;
-  public static final int OPERADOR_RELACIONAL = 8;
-  public static final int OPERADOR_ASIGNACION = 12;
-  public static final int ERROR = 20;
-  public static final int LPAREN = 15;
-  public static final int COMA = 13;
-  public static final int EOF = 0;
-  public static final int SEPARADOR_SECCION = 2;
-  public static final int OPERADOR_ARITMETICO = 11;
-  public static final int NUMERO = 17;
-  public static final int error = 1;
-  public static final int OPERADOR_LOGICO = 9;
-  public static final int NOT_LOGICO = 10;
-  public static final int IDENTIFICADOR = 19;
-  public static final int PALABRA_RESERVADA = 7;
-  public static final int ERROR_DECIMAL_INVALIDO = 22;
-  public static final int ERROR_IDENTIFICADOR_INVALIDO = 21;
+  public static final int ERROR_IDENTIFICADOR_INVALIDO = 41;
+  public static final int NUMERO = 37;
+  public static final int DISTINTO = 28;
+  public static final int MULT = 21;
+  public static final int SI = 10;
+  public static final int MOSTRAR = 16;
+  public static final int RESTA = 20;
+  public static final int LPAREN = 35;
+  public static final int ENTONCES = 11;
+  public static final int FIN = 8;
+  public static final int NOT_LOGICO = 32;
+  public static final int RPAREN = 36;
   public static final int CONFIG = 3;
+  public static final int IDENTIFICADOR = 39;
+  public static final int NOT = 31;
+  public static final int AND = 29;
+  public static final int FINMIENTRAS = 15;
+  public static final int IGUALDAD = 27;
+  public static final int LETRA = 5;
+  public static final int OR = 30;
+  public static final int MIENTRAS = 13;
+  public static final int DIV = 22;
+  public static final int SUMA = 19;
   public static final int COLOR_HEX = 6;
+  public static final int EOF = 0;
+  public static final int error = 1;
+  public static final int COMA = 33;
+  public static final int CADENA = 38;
+  public static final int PIPE = 34;
+  public static final int MENOR = 23;
+  public static final int ERROR = 40;
+  public static final int MAYOR = 24;
+  public static final int MAYOR_IGUAL = 26;
+  public static final int ERROR_DECIMAL_INVALIDO = 42;
+  public static final int LEER = 17;
+  public static final int HACER = 14;
+  public static final int OPERADOR_ASIGNACION = 18;
+  public static final int INICIO = 7;
+  public static final int MENOR_IGUAL = 25;
+  public static final int FINSI = 12;
+  public static final int VAR = 9;
+  public static final int SEPARADOR_SECCION = 2;
+  public static final int FIGURA = 4;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -37,12 +57,32 @@ public class sym {
   "FIGURA",
   "LETRA",
   "COLOR_HEX",
-  "PALABRA_RESERVADA",
-  "OPERADOR_RELACIONAL",
-  "OPERADOR_LOGICO",
-  "NOT_LOGICO",
-  "OPERADOR_ARITMETICO",
+  "INICIO",
+  "FIN",
+  "VAR",
+  "SI",
+  "ENTONCES",
+  "FINSI",
+  "MIENTRAS",
+  "HACER",
+  "FINMIENTRAS",
+  "MOSTRAR",
+  "LEER",
   "OPERADOR_ASIGNACION",
+  "SUMA",
+  "RESTA",
+  "MULT",
+  "DIV",
+  "MENOR",
+  "MAYOR",
+  "MENOR_IGUAL",
+  "MAYOR_IGUAL",
+  "IGUALDAD",
+  "DISTINTO",
+  "AND",
+  "OR",
+  "NOT",
+  "NOT_LOGICO",
   "COMA",
   "PIPE",
   "LPAREN",
