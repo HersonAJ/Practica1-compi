@@ -2,6 +2,7 @@ package com.example.practica1_compi.analizadores;
 
 import java_cup.runtime.Symbol;
 import com.example.practica1_compi.analizadores.*;
+import java.util.*;
 
 %% //separador de area
 
@@ -12,13 +13,11 @@ import com.example.practica1_compi.analizadores.*;
 %line
 %column
 
-%{
+%init{
 
-    private Symbol symbol(int type) {
-        return new Symbol(type, yyline + 1, yycolumn + 1, yytext());
-    }
+    errorList = new ArrayList<>();
 
-%}
+%init}
 
 /********************* macros ***************************************/
 
@@ -34,6 +33,30 @@ ESPACIO = [ \t\r\n\f]+
 
 ID_INVALIDO_NUM = ({DIGITO}+("."{DIGITO}+)?)({LETRA}|_)+({LETRA}|{DIGITO}|_)*
 ID_INVALIDO_GUION = _({LETRA}|{DIGITO}|_)+
+
+/***********************codigo del usuario ****************************/
+%{
+    //metodo para el manejo de errores
+  private List<String> errorList;
+
+  public List<String> getLexicalErrors(){
+      return this.errorList;
+  }
+
+  //personalizacion del sym
+  private Symbol symbol(int type) {
+      return new Symbol(type, yyline + 1, yycolumn + 1, yytext());
+  }
+
+  private Symbol symbol(int type, Object value) {
+      return new Symbol(type, yyline + 1, yycolumn +1, value);
+  }
+
+  private void error(String message) {
+      errorList.add("Error lexico en la linea " + (yyline + 1) + ", columna " + (yycolumn + 1) + ": " + message);
+  }
+
+%}
 
 %%
 
@@ -71,8 +94,11 @@ ID_INVALIDO_GUION = _({LETRA}|{DIGITO}|_)+
 
 {HEXCOLOR}                        { return symbol(sym.COLOR_HEX); }
 
-{ID_INVALIDO_NUM}                 { return symbol(sym.ERROR_IDENTIFICADOR_INVALIDO); }
-{ID_INVALIDO_GUION}               { return symbol(sym.ERROR_IDENTIFICADOR_INVALIDO); }
+{ID_INVALIDO_NUM}                 { error("Identificador invalido (comienza con numero): " + yytext());
+                                        return symbol(sym.ERROR_IDENTIFICADOR_INVALIDO, yytext());}
+
+{ID_INVALIDO_GUION}               { error("Identificador invalido (comienza con guion bajo): " + yytext());
+                                        return symbol(sym.ERROR_IDENTIFICADOR_INVALIDO, yytext());}
 
 //pseudocodigo
 "INICIO"                            { return symbol(sym.INICIO); }
@@ -110,16 +136,20 @@ ID_INVALIDO_GUION = _({LETRA}|{DIGITO}|_)+
 "("                                { return symbol(sym.LPAREN); }
 ")"                                { return symbol(sym.RPAREN); }
 
-{DECIMAL_INCOMPLETO}               { return symbol(sym.ERROR_DECIMAL_INVALIDO); }
-{DECIMAL}                          { return symbol(sym.NUMERO); }
-{ENTERO}                           { return symbol(sym.NUMERO); }
+{DECIMAL_INCOMPLETO}               { error("Decimal incompleto: " + yytext());
+                                        return symbol(sym.ERROR_DECIMAL_INVALIDO); }
 
-{CADENA}                           { return symbol(sym.CADENA); }
+{DECIMAL}                          { return symbol(sym.NUMERO, Double.parseDouble(yytext())); }
+{ENTERO}                           { return symbol(sym.NUMERO, Integer.parseInt(yytext())); }
 
-{ID}                               { return symbol(sym.IDENTIFICADOR); }
+{CADENA}                           { String cadena = yytext().substring(1, yytext().length()-1);
+                                        return symbol(sym.CADENA); }
+
+{ID}                               { return symbol(sym.IDENTIFICADOR, yytext()); }
 
 {ESPACIO}                          { /* ignorar */ }
 
-.                                   { return symbol(sym.ERROR); }
+.                                   { error("Caracter no reconocido: " + yytext());
+                                        return symbol(sym.ERROR); }
 
 <<EOF>>                             { return new Symbol(sym.EOF); }
