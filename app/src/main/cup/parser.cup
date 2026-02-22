@@ -1,3 +1,5 @@
+package com.example.practica1_compi.analizadores;
+
 import java_cup.runtime.*;
 
 parser code {:
@@ -18,7 +20,7 @@ terminal MOSTRAR, LEER;
 terminal OPERADOR_ASIGNACION;
 terminal SUMA, RESTA, MULT, DIV;
 terminal MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL, IGUALDAD, DISTINTO;
-terminal AND, OR, NOT, NOT_LOGICO;
+terminal AND, OR, NOT_LOGICO;
 //simbolos
 terminal COMA, PIPE, LPAREN, RPAREN;
 
@@ -52,13 +54,15 @@ non terminal configuracion;
 non terminal valor_config;
 
 non terminal expresion;
+non terminal termino;
+non terminal factor;
 non terminal condicion;
 non terminal COLOR_RGB;
 
 //precedencia
 precedence left OR; // para el ||
 precedence left AND; //para el &&
-precedence left NOT; // para el simbolo de !
+precedence right NOT_LOGICO; // para el simbolo de !
 
 precedence left MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL, IGUALDAD, DISTINTO;
 
@@ -69,7 +73,6 @@ precedence left MULT, DIV;
 start with programa;
 
 programa ::= seccion_pseudocodigo SEPARADOR_SECCION seccion_configuracion
-            | seccion_pseudocodigo
             ;
 
 //seccion de pseudocodigo
@@ -104,6 +107,7 @@ instruccion_simple ::= declaracion
 
 //declaracion y asignacion
 declaracion ::= VAR IDENTIFICADOR OPERADOR_ASIGNACION expresion
+            | VAR IDENTIFICADOR
             ;
 
 asignacion ::= IDENTIFICADOR OPERADOR_ASIGNACION expresion
@@ -127,7 +131,6 @@ mientras_ciclo ::= MIENTRAS LPAREN condicion RPAREN HACER bloque_simple FINMIENT
 //reglas de configuraciones
 
 seccion_configuracion ::= lista_configuraciones
-                        | /* pueden no haber configuraciones */
                         ;
 
 lista_configuraciones ::= lista_configuraciones configuracion
@@ -146,24 +149,32 @@ valor_config ::= COLOR_HEX
                 ;
 
 //expresiones aritmeticas
-expresion ::= expresion SUMA expresion
-            | expresion RESTA expresion
-            | expresion MULT expresion
-            | expresion DIV expresion
-            | NUMERO
-            | IDENTIFICADOR
-            |LPAREN expresion RPAREN
+expresion ::= expresion SUMA termino
+            | expresion RESTA termino
+            | termino
             ;
+
+termino ::= termino MULT factor
+        | termino DIV factor
+        | factor
+        ;
+
+factor ::= NUMERO
+        |  IDENTIFICADOR
+        | LPAREN expresion RPAREN
+        ;
+
 
 //condiciones
 condicion ::= expresion MENOR expresion
             | expresion MAYOR expresion
             | expresion MENOR_IGUAL expresion
             | expresion MAYOR_IGUAL expresion
+            | expresion IGUALDAD expresion
             | expresion DISTINTO expresion
             | condicion AND condicion
             | condicion OR condicion
-            | NOT condicion
+            | NOT_LOGICO condicion
             | LPAREN condicion RPAREN
             ;
 
