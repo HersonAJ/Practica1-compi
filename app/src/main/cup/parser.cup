@@ -29,7 +29,7 @@ parser code {:
         StringBuilder mssBuilder = new StringBuilder();
 
         //nombre del token encontrado
-        mssBuilder.append("Error sintactico: se encontro ' ");
+        mssBuilder.append("Error sintactico: se encontro '");
         mssBuilder.append(symbl_name_from_id(cur_token.sym));
 
         //valor del token
@@ -38,13 +38,13 @@ parser code {:
         }
 
         //ubicacion
-        mssBuilder.append(" ' en linea: ");
+        mssBuilder.append("' en linea: ");
         mssBuilder.append(cur_token.left);
         mssBuilder.append(", columna: ");
         mssBuilder.append(cur_token.right);
 
         if (expected_token_ids().isEmpty()) {
-            mssBuilder.append("--no se esperaba ningun token adicional");
+            mssBuilder.append(". No se esperaba ningun token adicional");
         } else {
             mssBuilder.append(". se esperaba: ");
             for (Integer expected_token_id : expected_token_ids()) {
@@ -99,11 +99,11 @@ parser code {:
                     mssBuilder.append(message);
                 }
 
-                syntaxErrors.add(mssBuilder.toString());
+                syntaxErrors.add(mssBuilder.toString().trim());
 
             } catch (Exception e){
                 //Si algo sale mal, todavia se guarda el error
-                syntaxErrors.add("Error sintactico: " + message);
+                syntaxErrors.add(("Error sintactico: " + message).trim());
             }
         }
 
@@ -118,7 +118,7 @@ parser code {:
             mssBuilder.append(", columna: ");
             mssBuilder.append(cur_token.right);
 
-            syntaxErrors.add(mssBuilder.toString());
+            syntaxErrors.add(mssBuilder.toString().trim());
         }
 
 :}
@@ -237,9 +237,11 @@ leer ::= LEER IDENTIFICADOR
 
 //instrucciones de control
 si_condicional ::= SI LPAREN condicion RPAREN ENTONCES bloque_simple FINSI
+                | SI LPAREN condicion RPAREN ENTONCES bloque_simple FIN SI
                 ;
 
 mientras_ciclo ::= MIENTRAS LPAREN condicion RPAREN HACER bloque_simple FINMIENTRAS
+                | MIENTRAS LPAREN condicion RPAREN HACER bloque_simple FIN MIENTRAS
                 ;
 
 
