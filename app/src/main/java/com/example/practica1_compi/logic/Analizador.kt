@@ -2,21 +2,9 @@ package com.example.practica1_compi.logic
 
 import com.example.practica1_compi.analizadores.Lexer
 import com.example.practica1_compi.analizadores.Parser
+import com.example.practica1_compi.models.ErrorReporte
+import com.example.practica1_compi.models.ResultadoAnalisis
 import java.io.StringReader
-
-data class ResultadoAnalisis(
-    val erroresLexicos: List<String>,
-    val erroresSintacticos: List<String>
-) {
-    val hayErroresLexicos: Boolean
-        get() = erroresLexicos.isNotEmpty()
-
-    val hayErroresSintacticos: Boolean
-        get() = erroresSintacticos.isNotEmpty()
-
-    val esExitoso: Boolean
-        get() = !hayErroresLexicos && !hayErroresSintacticos
-}
 
 class Analizador {
 
@@ -29,16 +17,22 @@ class Analizador {
 
             parser.parse()
 
-            ResultadoAnalisis(
-                erroresLexicos = lexer.lexicalErrors,
-                erroresSintacticos = parser.syntaxErrors
-            )
+            val erroresTotales = lexer.errorReportes + parser.errorReportes
+
+            ResultadoAnalisis( errores = erroresTotales)
 
         } catch (e: Exception) {
 
             ResultadoAnalisis(
-                erroresLexicos = emptyList(),
-                erroresSintacticos = listOf("Excepcion: ${e.message}")
+                errores = listOf(
+                    ErrorReporte(
+                        lexema = "",
+                        linea = 0,
+                        columna = 0,
+                        tipo = "sintactico",
+                        descripcion = "Excepcion: ${e.message}"
+                    )
+                )
             )
         }
     }

@@ -5,12 +5,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.practica1_compi.viewmodel.AnalisisViewModel
 
 @Composable
 fun EditorScreen(
-    viewModel: AnalisisViewModel = viewModel()
+    viewModel: AnalisisViewModel
 ) {
 
     var texto by remember { mutableStateOf("") }
@@ -45,28 +44,10 @@ fun EditorScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             if (resultado.esExitoso) {
-                Text("Compilacion exitosa")
+                Text("Compilacion Exitosa")
             } else {
-
                 Text("Se encontraron errores")
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                if (resultado.erroresLexicos.isNotEmpty()) {
-                    Text("Errores Lexicos:")
-                    resultado.erroresLexicos.forEach {
-                        Text(it)
-                    }
-                }
-
-                if (resultado.erroresSintacticos.isNotEmpty()) {
-                    Text("Errores Sintacticos:")
-                    resultado.erroresSintacticos.forEach {
-                        Text(it)
-                    }
-                }
+            }
             }
         }
     }
-}
-

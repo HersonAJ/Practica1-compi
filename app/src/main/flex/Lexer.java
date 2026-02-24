@@ -7,6 +7,7 @@ package com.example.practica1_compi.analizadores;
 import java_cup.runtime.Symbol;
 import com.example.practica1_compi.analizadores.*;
 import java.util.*;
+import com.example.practica1_compi.models.ErrorReporte;
 
 
 @SuppressWarnings("fallthrough")
@@ -443,6 +444,11 @@ public class Lexer implements java_cup.runtime.Scanner {
   /* user code: */
     //metodo para el manejo de errores
   private List<String> errorList;
+  private List<ErrorReporte> errorReportes = new ArrayList<>();
+
+  public List<ErrorReporte> getErrorReportes() {
+      return errorReportes;
+  }
 
   public List<String> getLexicalErrors(){
       return this.errorList;
@@ -458,7 +464,13 @@ public class Lexer implements java_cup.runtime.Scanner {
   }
 
   private void error(String message) {
-      errorList.add("Error lexico en la linea " + (yyline + 1) + ", columna " + (yycolumn + 1) + ": " + message);
+      int linea = yyline +1;
+      int columna = yycolumn+1;
+      String lexema = yytext();
+
+      errorList.add("Error lexico en la linea: " + linea +", columna: " + columna + ": " + message);
+
+      errorReportes.add(new ErrorReporte(lexema, linea, columna, "lexico", message));
   }
 
 

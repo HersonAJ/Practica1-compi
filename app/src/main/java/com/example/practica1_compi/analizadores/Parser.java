@@ -7,6 +7,7 @@ package com.example.practica1_compi.analizadores;
 
 import java_cup.runtime.*;
 import java.util.*;
+import com.example.practica1_compi.models.ErrorReporte;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -293,14 +294,13 @@ public class Parser extends java_cup.runtime.lr_parser {
 
 
 
-    private List<String> syntaxErrors;
     private Lexer lex;
+    private List<ErrorReporte> errorReportes = new ArrayList<>();
 
     //conexion del parser y lexer
     public Parser(Lexer lex) {
-    super(lex);
-    this.lex = lex;
-    this.syntaxErrors = new ArrayList<>();
+        super(lex);
+        this.lex = lex;
     }
 
     //getters
@@ -308,107 +308,54 @@ public class Parser extends java_cup.runtime.lr_parser {
     return this.lex;
     }
 
-    public List<String> getSyntaxErrors() {
-    return this.syntaxErrors;
+    public List<ErrorReporte> getErrorReportes() {
+        return errorReportes;
     }
 
     //metodo que se llamara cuando se encuentre un error
     public void syntax_error(Symbol cur_token) {
-        StringBuilder mssBuilder = new StringBuilder();
+        String lexema = symbl_name_from_id(cur_token.sym);
 
-        //nombre del token encontrado
-        mssBuilder.append("Error sintactico: se encontro '");
-        mssBuilder.append(symbl_name_from_id(cur_token.sym));
-
-        //valor del token
         if (cur_token.value != null) {
-            mssBuilder.append(" (" + cur_token.value.toString() + ")");
+            lexema = lexema + " (" + cur_token.value.toString() + ")";
         }
 
-        //ubicacion
-        mssBuilder.append("' en linea: ");
-        mssBuilder.append(cur_token.left);
-        mssBuilder.append(", columna: ");
-        mssBuilder.append(cur_token.right);
-
-        if (expected_token_ids().isEmpty()) {
-            mssBuilder.append(". No se esperaba ningun token adicional");
-        } else {
-            mssBuilder.append(". se esperaba: ");
-            for (Integer expected_token_id : expected_token_ids()) {
-                String tokenName = symbl_name_from_id(expected_token_id);
-
-                if (!tokenName.equals("error") &&
-                    !tokenName.equals("ERROR") &&
-                    !tokenName.equals("ERROR_IDENTIFICADOR_INVALIDO") &&
-                    !tokenName.equals("ERROR_DECIMAL_INVALIDO")) {
-                        mssBuilder.append(tokenName);
-                        mssBuilder.append(" ");
-                    }
-            }
-        }
-        syntaxErrors.add(mssBuilder.toString());
+        errorReportes.add( new ErrorReporte(lexema, cur_token.left, cur_token.right, "sintactico", "Token inesperado"));
     }
 
         public void report_error(String message, Object info){
-            try {
-                StringBuilder mssBuilder = new StringBuilder();
 
-                if(info instanceof Symbol){
-                    Symbol cur_token = (Symbol) info;
-                    mssBuilder.append("Error sintactico: ");
+            if (info instanceof Symbol) {
+                Symbol cur_token = (Symbol) info;
 
-                    //Token que causo el error
-                    mssBuilder.append("token '");
-                    mssBuilder.append(symbl_name_from_id(cur_token.sym));
-                    mssBuilder.append("'");
-
-                    //Lexema si existe
-                    if(cur_token.value != null){
-                        mssBuilder.append(" con valor '");
-                        mssBuilder.append(cur_token.value.toString());
-                        mssBuilder.append("'");
-                    }
-
-                    //Ubicacion
-                    mssBuilder.append(" en linea: ");
-                    mssBuilder.append(cur_token.left);
-                    mssBuilder.append(", columna: ");
-                    mssBuilder.append(cur_token.right);
-
-                    //Mensaje adicional
-                    if(message != null && !message.isEmpty()){
-                        mssBuilder.append(". ");
-                        mssBuilder.append(message);
-                    }
-                } else {
-                    //Si info no es un Symbol solo se usa el mensaje
-                    mssBuilder.append("Error sintactico: ");
-                    mssBuilder.append(message);
-                }
-
-                syntaxErrors.add(mssBuilder.toString().trim());
-
-            } catch (Exception e){
-                //Si algo sale mal, todavia se guarda el error
-                syntaxErrors.add(("Error sintactico: " + message).trim());
+                errorReportes.add(new ErrorReporte(symbl_name_from_id(cur_token.sym), cur_token.left, cur_token.right, "Sintactico",
+                message != null ? message : "Error sintactico"));
+            } else {
+                errorReportes.add(
+                    new ErrorReporte(
+                        "",
+                        0,
+                        0,
+                        "sintactico",
+                        message != null ? message : "Error sintactico"
+                    )
+                );
             }
         }
 
         //Metodo llamado cuando el error no puede ser recuperado
+    public void unrecovered_syntax_error(Symbol cur_token){
 
-        public void unrecovered_syntax_error(Symbol cur_token){
-            StringBuilder mssBuilder = new StringBuilder();
-            mssBuilder.append("Error sintactico FATAL - No se puede recuperar del token '");
-            mssBuilder.append(symbl_name_from_id(cur_token.sym));
-            mssBuilder.append("' en linea: ");
-            mssBuilder.append(cur_token.left);
-            mssBuilder.append(", columna: ");
-            mssBuilder.append(cur_token.right);
-
-            syntaxErrors.add(mssBuilder.toString().trim());
-        }
-
+        errorReportes.add(
+            new ErrorReporte(
+                symbl_name_from_id(cur_token.sym),
+                cur_token.left,
+                cur_token.right,
+                "sintactico",
+                "Error sintactico fatal"
+            )
+        );
+    }
 
 
 /** Cup generated class to encapsulate user supplied action code.*/
