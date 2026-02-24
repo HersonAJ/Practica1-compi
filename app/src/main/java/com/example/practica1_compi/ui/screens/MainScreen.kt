@@ -24,32 +24,56 @@ fun MainScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                    .padding(horizontal = 4.dp, vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
 
                 Button(
-                    onClick = { selectedTab = 0 }
+                    onClick = { selectedTab = 0 },
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp)
                 ) {
-                    Text("Editor")
+                    Text(
+                        text = "Editor",
+                        maxLines = 1,
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
 
                 Button(
-                    onClick = { selectedTab = 1 }
+                    onClick = { selectedTab = 1 },
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp)
                 ) {
-                    Text("Reportes")
+                    Text(
+                        text = "Reportes",
+                        maxLines = 1,
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
 
                 Button(
-                    onClick = { selectedTab = 2 }
+                    onClick = { selectedTab = 2 },
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp)
                 ) {
-                    Text("Diagrama")
+                    Text(
+                        text = "Diagrama",
+                        maxLines = 1,
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
 
                 Button(
-                    onClick = { selectedTab = 3 }
+                    onClick = { selectedTab = 3 },
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp)
                 ) {
-                    Text("Errores")
+                    Text(
+                        text = "Errores",
+                        maxLines = 1,
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
             }
         }
