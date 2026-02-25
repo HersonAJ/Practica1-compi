@@ -4,6 +4,7 @@ import java_cup.runtime.Symbol;
 import com.example.practica1_compi.analizadores.*;
 import java.util.*;
 import com.example.practica1_compi.models.ErrorReporte;
+import com.example.practica1_compi.models.ReporteOperador;
 
 %% //separador de area
 
@@ -66,6 +67,13 @@ ID_INVALIDO_GUION = _({LETRA}|{DIGITO}|_)+
       errorList.add("Error lexico en la linea: " + linea +", columna: " + columna + ": " + message);
 
       errorReportes.add(new ErrorReporte(lexema, linea, columna, "lexico", message));
+  }
+
+  //metodos para el reporte de operadores
+  private List<ReporteOperador> operadores = new ArrayList<>();
+
+  public List<ReporteOperador> getOperadores() {
+      return operadores;
   }
 
 %}
@@ -136,10 +144,17 @@ ID_INVALIDO_GUION = _({LETRA}|{DIGITO}|_)+
 "||"                               { return symbol(sym.OR); }
 "!"                                { return symbol(sym.NOT_LOGICO); }
 
-"+"                                 { return symbol(sym.SUMA); }
-"-"                                 { return symbol(sym.RESTA); }
-"*"                                 { return symbol(sym.MULT); }
-"/"                                 { return symbol(sym.DIV); }
+"+"                                 { operadores.add(new ReporteOperador("Suma", yyline+1, yycolumn+1, yytext()));
+                                        return symbol(sym.SUMA); }
+
+"-"                                 { operadores.add(new ReporteOperador("Resta", yyline+1, yycolumn+1, yytext()));
+                                        return symbol(sym.RESTA); }
+
+"*"                                 { operadores.add(new ReporteOperador("Multiplicacion", yyline+1, yycolumn+1, yytext()));
+                                        return symbol(sym.MULT); }
+
+"/"                                 { operadores.add(new ReporteOperador("Division", yyline+1, yycolumn+1, yytext()));
+                                        return symbol(sym.DIV); }
 
 "="                                { return symbol(sym.OPERADOR_ASIGNACION); }
 

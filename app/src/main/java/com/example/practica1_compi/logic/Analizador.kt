@@ -18,8 +18,9 @@ class Analizador {
             parser.parse()
 
             val erroresTotales = lexer.errorReportes + parser.errorReportes
+            val operadoresTotales = lexer.operadores
 
-            ResultadoAnalisis( errores = erroresTotales)
+            ResultadoAnalisis( errores = erroresTotales, operadores = operadoresTotales)
 
         } catch (e: Exception) {
 

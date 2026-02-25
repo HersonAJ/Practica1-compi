@@ -8,6 +8,7 @@ import java_cup.runtime.Symbol;
 import com.example.practica1_compi.analizadores.*;
 import java.util.*;
 import com.example.practica1_compi.models.ErrorReporte;
+import com.example.practica1_compi.models.ReporteOperador;
 
 
 @SuppressWarnings("fallthrough")
@@ -473,6 +474,13 @@ public class Lexer implements java_cup.runtime.Scanner {
       errorReportes.add(new ErrorReporte(lexema, linea, columna, "lexico", message));
   }
 
+  //metodos para el reporte de operadores
+  private List<ReporteOperador> operadores = new ArrayList<>();
+
+  public List<ReporteOperador> getOperadores() {
+      return operadores;
+  }
+
 
 
   /**
@@ -935,12 +943,14 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 50: break;
           case 7:
-            { return symbol(sym.MULT);
+            { operadores.add(new ReporteOperador("Multiplicacion", yyline+1, yycolumn+1, yytext()));
+                                        return symbol(sym.MULT);
             }
           // fall through
           case 51: break;
           case 8:
-            { return symbol(sym.SUMA);
+            { operadores.add(new ReporteOperador("Suma", yyline+1, yycolumn+1, yytext()));
+                                        return symbol(sym.SUMA);
             }
           // fall through
           case 52: break;
@@ -950,12 +960,14 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 53: break;
           case 10:
-            { return symbol(sym.RESTA);
+            { operadores.add(new ReporteOperador("Resta", yyline+1, yycolumn+1, yytext()));
+                                        return symbol(sym.RESTA);
             }
           // fall through
           case 54: break;
           case 11:
-            { return symbol(sym.DIV);
+            { operadores.add(new ReporteOperador("Division", yyline+1, yycolumn+1, yytext()));
+                                        return symbol(sym.DIV);
             }
           // fall through
           case 55: break;

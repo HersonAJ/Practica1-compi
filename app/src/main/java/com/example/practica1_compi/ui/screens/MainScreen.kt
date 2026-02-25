@@ -87,7 +87,7 @@ fun MainScreen(
 
             when (selectedTab) {
                 0 -> EditorScreen(viewModel)
-                1 -> ReportesScreen()
+                1 -> ReportesScreen(viewModel)
                 2 -> DiagramaScreen()
                 3 -> ErroresScreen(viewModel)
             }
