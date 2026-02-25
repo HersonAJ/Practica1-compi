@@ -20,7 +20,14 @@ class Analizador {
             val erroresTotales = lexer.errorReportes + parser.errorReportes
             val operadoresTotales = lexer.operadores
 
-            ResultadoAnalisis( errores = erroresTotales, operadores = operadoresTotales)
+            //constructor de ocurrencias
+            val lineas = text.lines()
+            val operadoresConOcurrencia = operadoresTotales.map { operadorActual ->
+                val ocurrenciaDetallada = ConstructorOcurrencia.construirOcurrencia(lineas, operadorActual.linea, operadorActual.columna)
+                operadorActual.copy(ocurrencia = ocurrenciaDetallada)
+            }
+
+            ResultadoAnalisis( errores = erroresTotales, operadores = operadoresConOcurrencia)
 
         } catch (e: Exception) {
 
