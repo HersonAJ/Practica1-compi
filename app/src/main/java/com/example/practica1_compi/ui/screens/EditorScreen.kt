@@ -23,8 +23,8 @@ fun EditorScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
         OutlinedTextField(
-            value = texto,
-            onValueChange = { texto = it },
+            value = viewModel.codigoFuente,
+            onValueChange = { viewModel.actualizarCodigo(it) },
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("Escribe el codigo aqui....") }
         )
@@ -32,7 +32,7 @@ fun EditorScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { viewModel.analizarTexto(texto) }
+            onClick = { viewModel.analizarTexto(viewModel.codigoFuente) }
         ) {
             Text("Analizar")
         }

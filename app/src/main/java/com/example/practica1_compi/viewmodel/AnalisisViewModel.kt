@@ -13,6 +13,13 @@ class AnalisisViewModel: ViewModel() {
 
     private val analizador = Analizador()
 
+    var codigoFuente by mutableStateOf("")
+    private set
+
+    fun actualizarCodigo(nuevoTexto: String){
+        codigoFuente = nuevoTexto
+    }
+
     var resultado by mutableStateOf<ResultadoAnalisis?>(null)
         private set
 
