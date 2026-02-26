@@ -14,14 +14,37 @@ data class NodoDeclaracion(
     override val columna: Int,
     val nombre: String,
     val valor: NodoASTBase?
-) : NodoASTBase()
+) : NodoASTBase() {
+    fun evaluarEntero(): Int? {
+        val resultado = when (valor) {
+            is NodoLiteral -> valor.evaluar()
+            is NodoExpresion -> valor.evaluar()
+            else -> null
+        }
+        return resultado?.toInt() // aquí truncamos el decimal
+    }
+
+    override fun aTexto(): String =
+        if (valor != null) "var $nombre = ${valor.aTexto()}" else "var $nombre"
+}
 
 data class NodoAsignacion(
     override val linea: Int,
     override val columna: Int,
     val nombre: String,
     val expresion: NodoASTBase
-) : NodoASTBase()
+) : NodoASTBase() {
+    fun evaluarEntero(): Int {
+        val resultado = when (expresion) {
+            is NodoLiteral -> expresion.evaluar()
+            is NodoExpresion -> expresion.evaluar()
+            else -> 0.0
+        }
+        return resultado.toInt() // para truncar el decimal
+    }
+
+    override fun aTexto(): String = "$nombre = ${expresion.aTexto()}"
+}
 
 data class NodoMostrar(
     override val linea: Int,

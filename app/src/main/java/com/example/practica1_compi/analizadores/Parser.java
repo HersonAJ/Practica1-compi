@@ -402,9 +402,7 @@ class CUP$Parser$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		List<NodoConfiguracion> c = (List<NodoConfiguracion>)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoPrograma(0,0,p,c);
-
+		 RESULT = new NodoPrograma(0,0,p,c); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("programa",0, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -479,10 +477,7 @@ class CUP$Parser$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase a = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion asignacion: " + a);
-    RESULT = a;
-
+		 RESULT = a; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -494,10 +489,7 @@ class CUP$Parser$actions {
 		int mleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int mright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase m = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion mostrar: " + m);
-    RESULT = m;
-
+		 RESULT = m; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -509,10 +501,7 @@ class CUP$Parser$actions {
 		int lleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int lright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase l = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion leer: " + l);
-    RESULT = l;
-
+		 RESULT = l; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -524,10 +513,7 @@ class CUP$Parser$actions {
 		int sleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int sright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase s = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion SI: " + s);
-    RESULT = s;
-
+		 RESULT = s; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -539,10 +525,7 @@ class CUP$Parser$actions {
 		int wleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int wright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase w = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion MIENTRAS: " + w);
-    RESULT = w;
-
+		 RESULT = w; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -554,10 +537,7 @@ class CUP$Parser$actions {
 		int lleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int lright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		List<NodoASTBase> l = (List<NodoASTBase>)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Bloque simple con " + l.size() + " instrucciones: " + l);
-    RESULT = l;
-
+		 RESULT = l; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("bloque_simple",10, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -572,11 +552,8 @@ class CUP$Parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase i = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    l.add(i);
-    Log.d("ParserDebug", "Lista instrucciones simples (acumulando): ahora " + l.size() + " elementos, último=" + i);
-    RESULT = l;
-
+		 l.add(i);
+                                        RESULT = l; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_instrucciones_simples",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -588,12 +565,9 @@ class CUP$Parser$actions {
 		int ileft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int iright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase i = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    List<NodoASTBase> lista = new ArrayList<>();
-    lista.add(i);
-    Log.d("ParserDebug", "Lista instrucciones simples inicializada con: " + i);
-    RESULT = lista;
-
+		 List<NodoASTBase> lista = new ArrayList<>();
+                                        lista.add(i);
+                                        RESULT = lista; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_instrucciones_simples",11, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -605,10 +579,7 @@ class CUP$Parser$actions {
 		int dleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase d = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion simple declaracion: " + d);
-    RESULT = d;
-
+		 RESULT = d;
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion_simple",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -620,10 +591,7 @@ class CUP$Parser$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase a = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion simple asignacion: " + a);
-    RESULT = a;
-
+		 RESULT = a; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion_simple",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -635,10 +603,7 @@ class CUP$Parser$actions {
 		int mleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int mright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase m = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion simple mostrar: " + m);
-    RESULT = m;
-
+		 RESULT = m; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion_simple",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -650,10 +615,7 @@ class CUP$Parser$actions {
 		int lleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int lright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase l = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    Log.d("ParserDebug", "Instruccion simple leer: " + l);
-    RESULT = l;
-
+		 RESULT = l; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("instruccion_simple",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -668,11 +630,8 @@ class CUP$Parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    NodoDeclaracion nodo = new NodoDeclaracion(idleft, idright, id, e);
-    Log.d("ParserDebug", "NodoDeclaracion creado: " + id);
-    RESULT = nodo;
-
+		 NodoDeclaracion nodo = new NodoDeclaracion(idleft, idright, id, e);
+                       RESULT = nodo; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaracion",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -684,11 +643,8 @@ class CUP$Parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    NodoDeclaracion nodo = new NodoDeclaracion(idleft, idright, id, null);
-    Log.d("ParserDebug", "NodoDeclaracion creado sin valor: " + id);
-    RESULT = nodo;
-
+		 NodoDeclaracion nodo = new NodoDeclaracion(idleft, idright, id, null);
+                        RESULT = nodo; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("declaracion",4, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -703,11 +659,8 @@ class CUP$Parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    NodoAsignacion nodo = new NodoAsignacion(idleft, idright, id, e);
-    Log.d("ParserDebug", "NodoAsignacion creado: " + id);
-    RESULT = nodo;
-
+		 NodoAsignacion nodo = new NodoAsignacion(idleft, idright, id, e);
+                        RESULT = nodo; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("asignacion",5, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -719,12 +672,8 @@ class CUP$Parser$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String c = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    NodoMostrar nodo = new NodoMostrar(cleft, cright,
-            new NodoLiteral(cleft, cright, c));
-    Log.d("ParserDebug", "NodoMostrar creado con cadena: " + c);
-    RESULT = nodo;
-
+		 NodoMostrar nodo = new NodoMostrar(cleft, cright, new NodoLiteral(cleft, cright, c));
+                    RESULT = nodo; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("mostrar",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -736,11 +685,8 @@ class CUP$Parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    NodoMostrar nodo = new NodoMostrar(e.getLinea(), e.getColumna(), e);
-    Log.d("ParserDebug", "NodoMostrar creado con expresión en línea: " + e.getLinea());
-    RESULT = nodo;
-
+		 NodoMostrar nodo = new NodoMostrar(e.getLinea(), e.getColumna(), e);
+                    RESULT = nodo; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("mostrar",6, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -752,11 +698,8 @@ class CUP$Parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    NodoLeer nodo = new NodoLeer(idleft, idright, id);
-    Log.d("ParserDebug", "NodoLeer creado: " + id);
-    RESULT = nodo;
-
+		 NodoLeer nodo = new NodoLeer(idleft, idright, id);
+               RESULT = nodo; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("leer",7, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -771,13 +714,8 @@ class CUP$Parser$actions {
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		List<NodoASTBase> b = (List<NodoASTBase>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		
-    NodoSi nodo = new NodoSi(c.getLinea(), c.getColumna(), c, b);
-    System.out.println("DEBUG CUP: NodoSi creado en línea " + c.getLinea());
-    RESULT = nodo;
-
-   /* RESULT = new NodoSi(c.getLinea(), c.getColumna(), c, b);*/
-
+		 NodoSi nodo = new NodoSi(c.getLinea(), c.getColumna(), c, b);
+                            RESULT = nodo; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("si_condicional",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -792,9 +730,7 @@ class CUP$Parser$actions {
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		List<NodoASTBase> b = (List<NodoASTBase>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		
-    RESULT = new NodoSi(c.getLinea(), c.getColumna(), c, b);
-
+		 RESULT = new NodoSi(c.getLinea(), c.getColumna(), c, b); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("si_condicional",8, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -809,12 +745,8 @@ class CUP$Parser$actions {
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		List<NodoASTBase> b = (List<NodoASTBase>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		
-    NodoMientras nodo = new NodoMientras(c.getLinea(), c.getColumna(), c, b);
-    Log.d("ParserDebug", "NodoMientras creado en línea " + c.getLinea());
-    RESULT = nodo;
-    /*RESULT = new NodoMientras(c.getLinea(), c.getColumna(), c, b);*/
-
+		 NodoMientras nodo = new NodoMientras(c.getLinea(), c.getColumna(), c, b);
+                            RESULT = nodo; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("mientras_ciclo",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -829,9 +761,7 @@ class CUP$Parser$actions {
 		int bleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).left;
 		int bright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)).right;
 		List<NodoASTBase> b = (List<NodoASTBase>)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-2)).value;
-		
-    RESULT = new NodoMientras(c.getLinea(), c.getColumna(), c, b);
-
+		 RESULT = new NodoMientras(c.getLinea(), c.getColumna(), c, b); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("mientras_ciclo",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-7)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -843,9 +773,7 @@ class CUP$Parser$actions {
 		int lleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int lright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		List<NodoConfiguracion> l = (List<NodoConfiguracion>)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = l;
-
+		 RESULT = l; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("seccion_configuracion",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -860,10 +788,8 @@ class CUP$Parser$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoConfiguracion c = (NodoConfiguracion)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    l.add(c);
-    RESULT = l;
-
+		 l.add(c);
+                               RESULT = l; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_configuraciones",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -875,11 +801,9 @@ class CUP$Parser$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoConfiguracion c = (NodoConfiguracion)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    List<NodoConfiguracion> lista = new ArrayList<>();
-    lista.add(c);
-    RESULT = lista;
-
+		 List<NodoConfiguracion> lista = new ArrayList<>();
+                                lista.add(c);
+                                RESULT = lista; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("lista_configuraciones",14, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -894,9 +818,7 @@ class CUP$Parser$actions {
 		int vleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int vright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String v = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoConfiguracion(cleft, cright, c, v, null);
-
+		 RESULT = new NodoConfiguracion(cleft, cright, c, v, null); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("configuracion",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -914,9 +836,7 @@ class CUP$Parser$actions {
 		int nleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int nright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Number n = (Number)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoConfiguracion(cleft, cright, c, v, n.intValue());
-
+		 RESULT = new NodoConfiguracion(cleft, cright, c, v, n.intValue()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("configuracion",15, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -991,9 +911,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoExpresion(e1.getLinea(), e1.getColumna(), "+", e1, e2);
-
+		 RESULT = new NodoExpresion(e1.getLinea(), e1.getColumna(), "+", e1, e2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1008,9 +926,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoExpresion(e1.getLinea(), e1.getColumna(), "-", e1, e2);
-
+		 RESULT = new NodoExpresion(e1.getLinea(), e1.getColumna(), "-", e1, e2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1022,9 +938,7 @@ class CUP$Parser$actions {
 		int tleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int tright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase t = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = t;
-
+		 RESULT = t; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",17, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1039,9 +953,7 @@ class CUP$Parser$actions {
 		int fleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int fright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase f = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoExpresion(t1.getLinea(), t1.getColumna(), "*", t1, f);
-
+		 RESULT = new NodoExpresion(t1.getLinea(), t1.getColumna(), "*", t1, f); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("termino",18, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1056,9 +968,7 @@ class CUP$Parser$actions {
 		int fleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int fright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase f = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoExpresion(t1.getLinea(), t1.getColumna(), "/", t1, f);
-
+		 RESULT = new NodoExpresion(t1.getLinea(), t1.getColumna(), "/", t1, f); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("termino",18, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1070,9 +980,7 @@ class CUP$Parser$actions {
 		int fleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int fright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase f = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = f;
-
+		 RESULT = f; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("termino",18, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1084,9 +992,7 @@ class CUP$Parser$actions {
 		int nleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int nright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Number n = (Number)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoLiteral(nleft, nright, n.toString()); //quitar el toString si falla
-
+		 RESULT = new NodoLiteral(nleft, nright, n.toString()); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("factor",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1098,9 +1004,7 @@ class CUP$Parser$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoVariable(idleft, idright, id);
-
+		 RESULT = new NodoVariable(idleft, idright, id); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("factor",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1112,9 +1016,7 @@ class CUP$Parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		NodoASTBase e = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		
-    RESULT = e;
-
+		 RESULT = e; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("factor",19, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1129,9 +1031,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "<", e1, e2);
-
+		 RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "<", e1, e2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1146,9 +1046,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), ">", e1, e2);
-
+		 RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), ">", e1, e2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1163,9 +1061,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "<=", e1, e2);
-
+		 RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "<=", e1, e2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1180,9 +1076,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), ">=", e1, e2);
-
+		 RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), ">=", e1, e2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1197,9 +1091,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "==", e1, e2);
-
+		 RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "==", e1, e2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1214,9 +1106,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "!=", e1, e2);
-
+		 RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "!=", e1, e2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1231,9 +1121,7 @@ class CUP$Parser$actions {
 		int c2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int c2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase c2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(c1.getLinea(), c1.getColumna(), "&&", c1, c2);
-
+		 RESULT = new NodoCondicion(c1.getLinea(), c1.getColumna(), "&&", c1, c2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1248,9 +1136,7 @@ class CUP$Parser$actions {
 		int c2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int c2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase c2 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(c1.getLinea(), c1.getColumna(), "||", c1, c2);
-
+		 RESULT = new NodoCondicion(c1.getLinea(), c1.getColumna(), "||", c1, c2); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1262,9 +1148,7 @@ class CUP$Parser$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase c = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = new NodoCondicion(c.getLinea(), c.getColumna(), "!", c, null);
-
+		 RESULT = new NodoCondicion(c.getLinea(), c.getColumna(), "!", c, null); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1276,9 +1160,7 @@ class CUP$Parser$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
 		NodoASTBase c = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
-		
-    RESULT = c;
-
+		 RESULT = c; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("condicion",20, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1296,9 +1178,7 @@ class CUP$Parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		NodoASTBase e3 = (NodoASTBase)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-    RESULT = e1.toString() + "," + e2.toString() + "," + e3.toString();
-
+		 RESULT = e1.toString() + "," + e2.toString() + "," + e3.toString(); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("COLOR_RGB",21, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
