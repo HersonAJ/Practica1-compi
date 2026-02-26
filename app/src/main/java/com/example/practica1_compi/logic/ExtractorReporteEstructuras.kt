@@ -20,37 +20,4 @@ class ExtractorReporteEstructuras {
             return estructuras
         }
 
-
-    private fun recorrerNodos(nodos: List<NodoASTBase>, reportes: MutableList<ReporteEstructura>) {
-        for (nodo in nodos) {
-            when (nodo) {
-                is NodoSi -> {
-                    reportes.add(
-                        ReporteEstructura(
-                            tipo = "SI",
-                            linea = nodo.linea,
-                            condicion = nodo.condicion.textoCodigo()
-                        )
-                    )
-                    recorrerNodos(nodo.bloque, reportes)
-                }
-                is NodoMientras -> {
-                    reportes.add(
-                        ReporteEstructura(
-                            tipo = "MIENTRAS",
-                            linea = nodo.linea,
-                            condicion = nodo.condicion.textoCodigo()
-                        )
-                    )
-                    recorrerNodos(nodo.bloque, reportes)
-                }
-                is NodoBloque -> {
-                    recorrerNodos(nodo.instrucciones, reportes)
-                }
-                else -> {
-                    // otros nodos no generan reporte de estructuras
-                }
-            }
-        }
-    }
 }
