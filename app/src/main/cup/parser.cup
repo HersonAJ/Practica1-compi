@@ -2,246 +2,303 @@ package com.example.practica1_compi.analizadores;
 
 import java_cup.runtime.*;
 import java.util.*;
-import com.example.practica1_compi.models.ErrorReporte;
+import com.example.practica1_compi.models.*;
+import android.util.Log;
 
 parser code {:
 
     private Lexer lex;
     private List<ErrorReporte> errorReportes = new ArrayList<>();
+    private List<ReporteEstructura> estructuras = new ArrayList<>();
 
-    //conexion del parser y lexer
     public Parser(Lexer lex) {
         super(lex);
         this.lex = lex;
     }
 
-    //getters
     public Lexer getLexer() {
-    return this.lex;
+        return this.lex;
     }
 
     public List<ErrorReporte> getErrorReportes() {
         return errorReportes;
     }
 
-    //metodo que se llamara cuando se encuentre un error
     public void syntax_error(Symbol cur_token) {
         String lexema = symbl_name_from_id(cur_token.sym);
-
         if (cur_token.value != null) {
             lexema = lexema + " (" + cur_token.value.toString() + ")";
         }
-
-        errorReportes.add( new ErrorReporte(lexema, cur_token.left, cur_token.right, "sintactico", "Token inesperado"));
+        errorReportes.add(
+            new ErrorReporte(lexema, cur_token.left, cur_token.right,
+                    "Sintactico", "Token inesperado"));
     }
 
-        public void report_error(String message, Object info){
-
-            if (info instanceof Symbol) {
-                Symbol cur_token = (Symbol) info;
-
-                errorReportes.add(new ErrorReporte(symbl_name_from_id(cur_token.sym), cur_token.left, cur_token.right, "Sintactico",
-                message != null ? message : "Error sintactico"));
-            } else {
-                errorReportes.add(
-                    new ErrorReporte(
-                        "",
-                        0,
-                        0,
-                        "sintactico",
-                        message != null ? message : "Error sintactico"
-                    )
-                );
-            }
+    public void report_error(String message, Object info){
+        if (info instanceof Symbol) {
+            Symbol cur_token = (Symbol) info;
+            errorReportes.add(
+                new ErrorReporte(
+                    symbl_name_from_id(cur_token.sym),
+                    cur_token.left,
+                    cur_token.right,
+                    "Sintactico",
+                    message != null ? message : "Error sintactico"
+                )
+            );
         }
+    }
 
-        //Metodo llamado cuando el error no puede ser recuperado
     public void unrecovered_syntax_error(Symbol cur_token){
-
         errorReportes.add(
             new ErrorReporte(
                 symbl_name_from_id(cur_token.sym),
                 cur_token.left,
                 cur_token.right,
-                "sintactico",
+                "Sintactico",
                 "Error sintactico fatal"
             )
         );
     }
+
+    public List<ReporteEstructura> getEstructuras() {
+        return estructuras;
+    }
 :}
 
-//terminales
+// TERMINALES
 terminal SEPARADOR_SECCION;
-terminal CONFIG, FIGURA, LETRA, COLOR_HEX;
+terminal String CONFIG, FIGURA, LETRA, COLOR_HEX;
 terminal INICIO, FIN, VAR;
 terminal SI, ENTONCES, FINSI;
 terminal MIENTRAS, HACER, FINMIENTRAS;
 terminal MOSTRAR, LEER;
 
-//operadores
 terminal OPERADOR_ASIGNACION;
 terminal SUMA, RESTA, MULT, DIV;
 terminal MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL, IGUALDAD, DISTINTO;
 terminal AND, OR, NOT_LOGICO;
-//simbolos
+
 terminal COMA, PIPE, LPAREN, RPAREN;
 
-//literales
-terminal NUMERO, CADENA, IDENTIFICADOR;
-
-//errores
+terminal String CADENA, IDENTIFICADOR;
+terminal Number NUMERO;
 terminal ERROR, ERROR_IDENTIFICADOR_INVALIDO, ERROR_DECIMAL_INVALIDO;
 
-//no terminales
-non terminal programa;
-non terminal seccion_pseudocodigo;
-non terminal lista_instrucciones;
-non terminal instruccion;
+// NO TERMINALES TIPADOS
+non terminal NodoPrograma programa;
 
-non terminal declaracion;
-non terminal asignacion;
-non terminal mostrar;
-non terminal leer;
+non terminal List<NodoASTBase> seccion_pseudocodigo;
+non terminal List<NodoASTBase> lista_instrucciones;
+non terminal NodoASTBase instruccion;
 
-non terminal si_condicional;
-non terminal mientras_ciclo;
+non terminal NodoASTBase declaracion;
+non terminal NodoASTBase asignacion;
+non terminal NodoASTBase mostrar;
+non terminal NodoASTBase leer;
 
-non terminal bloque_simple;
-non terminal lista_instrucciones_simples;
-non terminal instruccion_simple;
+non terminal NodoASTBase si_condicional;
+non terminal NodoASTBase mientras_ciclo;
 
-non terminal seccion_configuracion;
-non terminal lista_configuraciones;
-non terminal configuracion;
-non terminal valor_config;
+non terminal List<NodoASTBase> bloque_simple;
+non terminal List<NodoASTBase> lista_instrucciones_simples;
+non terminal NodoASTBase instruccion_simple;
 
-non terminal expresion;
-non terminal termino;
-non terminal factor;
-non terminal condicion;
-non terminal COLOR_RGB;
+non terminal List<NodoConfiguracion> seccion_configuracion;
+non terminal List<NodoConfiguracion> lista_configuraciones;
+non terminal NodoConfiguracion configuracion;
+non terminal String valor_config;
 
-//precedencia
-precedence left OR; // para el ||
-precedence left AND; //para el &&
-precedence right NOT_LOGICO; // para el simbolo de !
+non terminal NodoASTBase expresion;
+non terminal NodoASTBase termino;
+non terminal NodoASTBase factor;
+non terminal NodoASTBase condicion;
+non terminal String COLOR_RGB;
 
+// PRECEDENCIA
+precedence left OR;
+precedence left AND;
+precedence right NOT_LOGICO;
 precedence left MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL, IGUALDAD, DISTINTO;
-
 precedence left SUMA, RESTA;
 precedence left MULT, DIV;
 
-
 start with programa;
 
-programa ::= seccion_pseudocodigo SEPARADOR_SECCION seccion_configuracion
-            ;
 
-//seccion de pseudocodigo
-seccion_pseudocodigo ::= INICIO lista_instrucciones FIN
-            ;
+// ================= PROGRAMA =================
 
-lista_instrucciones ::= lista_instrucciones instruccion
-                    | instruccion
-                    ;
-
-instruccion ::= declaracion
-            | asignacion
-            | mostrar
-            | leer
-            | si_condicional
-            | mientras_ciclo
-            ;
-
-//instruccion para no anidar
-bloque_simple ::= lista_instrucciones_simples
-                ;
-
-lista_instrucciones_simples ::= lista_instrucciones_simples instruccion_simple
-                            | instruccion_simple
-                            ;
-
-instruccion_simple ::= declaracion
-                    | asignacion
-                    | mostrar
-                    | leer
-                    ;
-
-//declaracion y asignacion
-declaracion ::= VAR IDENTIFICADOR OPERADOR_ASIGNACION expresion
-            | VAR IDENTIFICADOR
-            ;
-
-asignacion ::= IDENTIFICADOR OPERADOR_ASIGNACION expresion
-            ;
-
-mostrar ::= MOSTRAR CADENA
-        | MOSTRAR expresion
-        ;
-
-leer ::= LEER IDENTIFICADOR
-        ;
-
-//instrucciones de control
-si_condicional ::= SI LPAREN condicion RPAREN ENTONCES bloque_simple FINSI
-                | SI LPAREN condicion RPAREN ENTONCES bloque_simple FIN SI
-                ;
-
-mientras_ciclo ::= MIENTRAS LPAREN condicion RPAREN HACER bloque_simple FINMIENTRAS
-                | MIENTRAS LPAREN condicion RPAREN HACER bloque_simple FIN MIENTRAS
-                ;
+programa ::= seccion_pseudocodigo:p SEPARADOR_SECCION seccion_configuracion:c
+                    {: RESULT = new NodoPrograma(0,0,p,c); :};
 
 
-//reglas de configuraciones
+//pseudocodigo
+seccion_pseudocodigo ::= INICIO lista_instrucciones:l FIN
+                            {: RESULT = l; :};
 
-seccion_configuracion ::= lista_configuraciones
-                        ;
+lista_instrucciones ::= lista_instrucciones:l instruccion:i
+                            {:  l.add(i);
+                                RESULT = l; :}
+                    | instruccion:i
+                            {:
+                                List<NodoASTBase> lista = new ArrayList<>();
+                                lista.add(i);
+                                RESULT = lista;
+                            :};
 
-lista_configuraciones ::= lista_configuraciones configuracion
-                        | configuracion
-                        ;
-
-configuracion ::= CONFIG OPERADOR_ASIGNACION valor_config
-                | CONFIG OPERADOR_ASIGNACION valor_config PIPE NUMERO
-                ;
-
-valor_config ::= COLOR_HEX
-                | COLOR_RGB
-                | FIGURA
-                | LETRA
-                | NUMERO
-                ;
-
-//expresiones aritmeticas
-expresion ::= expresion SUMA termino
-            | expresion RESTA termino
-            | termino
-            ;
-
-termino ::= termino MULT factor
-        | termino DIV factor
-        | factor
-        ;
-
-factor ::= NUMERO
-        |  IDENTIFICADOR
-        | LPAREN expresion RPAREN
-        ;
+instruccion ::= declaracion:d
+                    {: RESULT = d; :}
+                | asignacion:a
+                    {: RESULT = a; :}
+                | mostrar:m
+                    {: RESULT = m; :}
+                | leer:l
+                    {: RESULT = l; :}
+                | si_condicional:s
+                    {: RESULT = s; :}
+                | mientras_ciclo:w
+                    {: RESULT = w; :};
 
 
-//condiciones
-condicion ::= expresion MENOR expresion
-            | expresion MAYOR expresion
-            | expresion MENOR_IGUAL expresion
-            | expresion MAYOR_IGUAL expresion
-            | expresion IGUALDAD expresion
-            | expresion DISTINTO expresion
-            | condicion AND condicion
-            | condicion OR condicion
-            | NOT_LOGICO condicion
-            | LPAREN condicion RPAREN
-            ;
+bloque_simple ::= lista_instrucciones_simples:l
+                    {: RESULT = l; :};
 
-//condificon para el color rgb
-COLOR_RGB ::= expresion COMA expresion COMA expresion
-            ;
+lista_instrucciones_simples ::= lista_instrucciones_simples:l instruccion_simple:i
+                                    {: l.add(i);
+                                        RESULT = l; :}
+                            | instruccion_simple:i
+                                    {: List<NodoASTBase> lista = new ArrayList<>();
+                                        lista.add(i);
+                                        RESULT = lista; :};
+
+instruccion_simple ::= declaracion:d
+                        {: RESULT = d;:}
+                    | asignacion:a
+                        {: RESULT = a; :}
+                    | mostrar:m
+                        {: RESULT = m; :}
+                    | leer:l
+                        {: RESULT = l; :};
+
+//declaracion
+declaracion ::= VAR IDENTIFICADOR:id OPERADOR_ASIGNACION expresion:e
+                    {: NodoDeclaracion nodo = new NodoDeclaracion(idleft, idright, id, e);
+                       RESULT = nodo; :}
+             | VAR IDENTIFICADOR:id
+                    {: NodoDeclaracion nodo = new NodoDeclaracion(idleft, idright, id, null);
+                        RESULT = nodo; :};
+
+//asignacion
+asignacion ::= IDENTIFICADOR:id OPERADOR_ASIGNACION expresion:e
+                    {: NodoAsignacion nodo = new NodoAsignacion(idleft, idright, id, e);
+                        RESULT = nodo; :};
+
+
+//mostrar
+mostrar ::= MOSTRAR CADENA:c
+                {: NodoMostrar nodo = new NodoMostrar(cleft, cright, new NodoLiteral(cleft, cright, c));
+                    RESULT = nodo; :}
+        | MOSTRAR expresion:e
+                {: NodoMostrar nodo = new NodoMostrar(e.getLinea(), e.getColumna(), e);
+                    RESULT = nodo; :};
+
+//leer
+leer ::= LEER IDENTIFICADOR:id
+            {: NodoLeer nodo = new NodoLeer(idleft, idright, id);
+               RESULT = nodo; :};
+
+//si condicional
+si_condicional ::= SI LPAREN condicion:c RPAREN ENTONCES bloque_simple:b FINSI
+                        {: NodoSi nodo = new NodoSi(c.getLinea(), c.getColumna(), c, b);
+                            RESULT = nodo; :}
+                | SI LPAREN condicion:c RPAREN ENTONCES bloque_simple:b FIN SI
+                        {: RESULT = new NodoSi(c.getLinea(), c.getColumna(), c, b); :};
+
+
+//mientras
+mientras_ciclo ::= MIENTRAS LPAREN condicion:c RPAREN HACER bloque_simple:b FINMIENTRAS
+                        {: NodoMientras nodo = new NodoMientras(c.getLinea(), c.getColumna(), c, b);
+                            RESULT = nodo; :}
+                | MIENTRAS LPAREN condicion:c RPAREN HACER bloque_simple:b FIN MIENTRAS
+                        {: RESULT = new NodoMientras(c.getLinea(), c.getColumna(), c, b); :};
+
+
+//configuracion
+
+seccion_configuracion ::= lista_configuraciones:l
+                            {: RESULT = l; :};
+
+lista_configuraciones ::= lista_configuraciones:l configuracion:c
+                            {: l.add(c);
+                               RESULT = l; :}
+                        | configuracion:c
+                            {: List<NodoConfiguracion> lista = new ArrayList<>();
+                                lista.add(c);
+                                RESULT = lista; :};
+
+configuracion ::= CONFIG:c OPERADOR_ASIGNACION valor_config:v
+                        {: RESULT = new NodoConfiguracion(cleft, cright, c, v, null); :}
+               | CONFIG:c OPERADOR_ASIGNACION valor_config:v PIPE NUMERO:n
+                        {: RESULT = new NodoConfiguracion(cleft, cright, c, v, n.intValue()); :};
+
+valor_config ::= COLOR_HEX:h
+                    {: RESULT = h; :}
+                | COLOR_RGB:rgb
+                    {: RESULT = rgb; :}
+                | FIGURA:f
+                    {: RESULT = f; :}
+                | LETRA:l
+                    {: RESULT = l; :}
+                | NUMERO:n
+                    {: RESULT = n.toString(); :} ;
+
+
+//expresiones
+expresion ::= expresion:e1 SUMA termino:e2
+                    {: RESULT = new NodoExpresion(e1.getLinea(), e1.getColumna(), "+", e1, e2); :}
+            | expresion:e1 RESTA termino:e2
+                    {: RESULT = new NodoExpresion(e1.getLinea(), e1.getColumna(), "-", e1, e2); :}
+            | termino:t
+                    {: RESULT = t; :};
+
+termino ::= termino:t1 MULT factor:f
+                {: RESULT = new NodoExpresion(t1.getLinea(), t1.getColumna(), "*", t1, f); :}
+        | termino:t1 DIV factor:f
+                {: RESULT = new NodoExpresion(t1.getLinea(), t1.getColumna(), "/", t1, f); :}
+        | factor:f
+                {: RESULT = f; :};
+
+factor ::= NUMERO:n
+            {: RESULT = new NodoLiteral(nleft, nright, n.toString()); :}
+        | IDENTIFICADOR:id
+            {: RESULT = new NodoVariable(idleft, idright, id); :}
+        | LPAREN expresion:e RPAREN
+            {: RESULT = e; :};
+
+
+//condicion
+condicion ::= expresion:e1 MENOR expresion:e2
+                    {: RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "<", e1, e2); :}
+            | expresion:e1 MAYOR expresion:e2
+                    {: RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), ">", e1, e2); :}
+            | expresion:e1 MENOR_IGUAL expresion:e2
+                    {: RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "<=", e1, e2); :}
+            | expresion:e1 MAYOR_IGUAL expresion:e2
+                    {: RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), ">=", e1, e2); :}
+            | expresion:e1 IGUALDAD expresion:e2
+                    {: RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "==", e1, e2); :}
+            | expresion:e1 DISTINTO expresion:e2
+                    {: RESULT = new NodoCondicion(e1.getLinea(), e1.getColumna(), "!=", e1, e2); :}
+            | condicion:c1 AND condicion:c2
+                    {: RESULT = new NodoCondicion(c1.getLinea(), c1.getColumna(), "&&", c1, c2); :}
+            | condicion:c1 OR condicion:c2
+                    {: RESULT = new NodoCondicion(c1.getLinea(), c1.getColumna(), "||", c1, c2); :}
+            | NOT_LOGICO condicion:c
+                    {: RESULT = new NodoCondicion(c.getLinea(), c.getColumna(), "!", c, null); :}
+            | LPAREN condicion:c RPAREN
+                    {: RESULT = c; :};
+
+
+//color rgb
+COLOR_RGB ::= expresion:e1 COMA expresion:e2 COMA expresion:e3
+                    {: RESULT = e1.toString() + "," + e2.toString() + "," + e3.toString(); :};

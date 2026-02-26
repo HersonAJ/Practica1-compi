@@ -96,6 +96,38 @@ fun ReportesScreen(viewModel: AnalisisViewModel) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                if (resultado.estructuras.isEmpty()) {
+                    Text(
+                        text = "No se encontraron estructuras en el codigo",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                } else {
+                    //encabezado de tabla
+                    Column{
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                        ) {
+                            Text("Objeto", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                            Text("Linea", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                            Text("Condicion", modifier = Modifier.weight(2f), style = MaterialTheme.typography.bodySmall)
+                        }
+
+                        HorizontalDivider()
+
+                        //filas con las estructuras
+                        resultado.estructuras.forEach { estructuraActual ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)
+                            ) {
+                                Text(estructuraActual.tipo, modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                                Text(estructuraActual.linea.toString(), modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                                Text(estructuraActual.condicion, modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
+                            }
+                            HorizontalDivider()
+                        }
+                    }
+                }
+
             }
         }
     }

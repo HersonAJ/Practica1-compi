@@ -9,7 +9,7 @@ package com.example.practica1_compi.analizadores;
 public class sym {
   /* terminals */
   public static final int ERROR_IDENTIFICADOR_INVALIDO = 40;
-  public static final int NUMERO = 36;
+  public static final int NUMERO = 38;
   public static final int DISTINTO = 28;
   public static final int MULT = 21;
   public static final int SI = 10;
@@ -21,7 +21,7 @@ public class sym {
   public static final int NOT_LOGICO = 31;
   public static final int RPAREN = 35;
   public static final int CONFIG = 3;
-  public static final int IDENTIFICADOR = 38;
+  public static final int IDENTIFICADOR = 37;
   public static final int AND = 29;
   public static final int FINMIENTRAS = 15;
   public static final int IGUALDAD = 27;
@@ -34,7 +34,7 @@ public class sym {
   public static final int EOF = 0;
   public static final int error = 1;
   public static final int COMA = 32;
-  public static final int CADENA = 37;
+  public static final int CADENA = 36;
   public static final int PIPE = 33;
   public static final int MENOR = 23;
   public static final int ERROR = 39;
@@ -87,9 +87,9 @@ public class sym {
   "PIPE",
   "LPAREN",
   "RPAREN",
-  "NUMERO",
   "CADENA",
   "IDENTIFICADOR",
+  "NUMERO",
   "ERROR",
   "ERROR_IDENTIFICADOR_INVALIDO",
   "ERROR_DECIMAL_INVALIDO"
